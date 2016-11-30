@@ -11,6 +11,7 @@ TO DO
 # App specific
 ignore/*
 cookies.txt
+howthehttpverbsgetadded.js
 
 # Config specific
 config.js

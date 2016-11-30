@@ -1,7 +1,7 @@
 {
   "name": "express_render_extension",
   "version": "0.0.0",
-  "description": "Learning how to extend express' render function",
+  "description": "Tiny middleware node.js module that determines whether client is not a browser and feeds it json instead.",
   "main": "app.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -10,7 +10,6 @@
   "license": "MIT",
   "dependencies": {
     "express": "^4.14.0",
-    "merge-descriptors": "^1.0.1",
     "pug": "^2.0.0-beta6",
     "user-agent-is-browser": "^0.1.0"
   }
