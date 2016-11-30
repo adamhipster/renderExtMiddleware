@@ -7,7 +7,7 @@ const person = {name: "John" , age: 21};
 //middleware stack is being determined in order like this due to it being processed
 //top to bottom and placed on a stack (I think??... I think so...).
 app.use( (req, res, next) => {
-	res.render = ext.response().render;
+	res.render = ext(res.render).render;
 	next();
 });
 
