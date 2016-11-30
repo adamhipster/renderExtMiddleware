@@ -1,33 +1,37 @@
 const express = require('express');
 const mixin = require('merge-descriptors');
-let res = require(__dirname + '/node_modules/express/lib/response.js');
+// let res = require(__dirname + '/node_modules/express/lib/response.js');
 let isBrowser = require('user-agent-is-browser');
 
 /**
  * Response prototype.
  */
 
-exports.response = (app) => {
-	let res = Object.create(express.response);
-	if(app) mixin(res, app, false);
+exports.response = (r) => {
+	let res = Object.create(r);
 	res.render = render;
-	// res.render = 'YOLOOO WOLOOO YOLOOO WOLOOO'; //debug
+	res.debug = debug;
 	return res;
 }
 
 function render (view, locals, callback) {	
-	// const userAgent = express.request.headers[['user-agent']];
-	// if(isBrowser(userAgent)){
-	// 	express.response.render(view, locals, callback);	
-	// }
-	// else{
-	// 	express.json(locals);
-	// }
+	const userAgent = this.req.headers['user-agent'];
+	if(isBrowser(userAgent)){
+		console.log('view');
+		console.log(view);
+		this.render = express.response.render;
+		this.render(view, locals, callback);	
+	}
+	else{
+		this.json(locals);
+	}
 
-
+	console.log('exiting ext.js render()');
 }
 
-
+function debug (){
+	console.log('ext.js debug()');
+}
 
 //helpers
 Object.create = function (o) {
