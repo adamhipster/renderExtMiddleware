@@ -1,20 +1,18 @@
-let isBrowser = require('user-agent-is-browser');
+//Rewrote the code with the help of: 
+//http://stackoverflow.com/questions/9285880/node-js-express-js-how-to-override-intercept-res-render-function
 
-module.exports = function(req, res, next) {
-	//without `res.renderOld` there is no way I know to expose `this` to the `render` function of express.
-	res.renderOld = res.render;
-	res.render = renderExtension;
-	next();
-}
+module.exports = function( req, res, next ) {
+    let _render = res.render;
+    res.render = function( view, options, fn ) {
 
-function renderExtension (view, locals, callback) {	
-	const userAgent = this.req.headers['user-agent'];
-	
-	//render like we always do.
+    //render like we always do.
+    //without `res.renderOld` there is no way I know to expose `this` to the `render` function of express.
 	if isBrowser(userAgent)
-		this.renderOld(view, locals, callback);	
-	
+		_render.call( this, view, options, fn );
+
 	//render however you want, the client is not a browser
 	else 
 		this.json(locals);
-}
+    }
+    next();
+});
